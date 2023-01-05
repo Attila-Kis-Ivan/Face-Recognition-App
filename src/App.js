@@ -7,18 +7,38 @@ import Rank from './components/Rank/Rank';
 
 import './App.css';
 
-function App() {
+class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+      input: ''
+    }
+  }
+
+  onInputchange= (event) => {
+    console.log(event.target.value);
+  } 
+
+  onButtonSubmit = () => {
+    console.log('click')
+  }
+
+  render() {
   return (
     <div className="App">
     <ParticlesBg color="#ffffff" type="cobweb" num={200} bg={true} />
       <Navigation />
       <Logo/>
       <Rank/>
-     <ImageLinkForm/>
+     <ImageLinkForm 
+       onInputchange={this.onInputchange} 
+       onButtonSubmit={this.onButtonSubmit}
+      />
 
        {/* <FaceRrcognition/>*/}
     </div>
-  );
+   );
+ }
 }
 
 export default App;
