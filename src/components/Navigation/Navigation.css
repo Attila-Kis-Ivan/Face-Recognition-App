@@ -21,3 +21,38 @@ nav {
 #sign-out:active {
     transform: translateY(2px);
 }
+
+#sign-in {
+    color: black;
+    cursor: pointer;
+    font-size: 1.5rem;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+#sign-in:hover {
+    color: rgb(177, 177, 247);
+    text-decoration: underline;
+    
+}
+
+#sign-in:active {
+    transform: translateY(2px);
+}
+
+#register {
+    color: black;
+    cursor: pointer;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+#register:hover {
+    color: rgb(177, 177, 247);
+    text-decoration: underline;
+    
+}
+
+#register:active {
+    transform: translateY(2px);
+}
