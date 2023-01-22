@@ -3,7 +3,6 @@ import Navigation from './components/Navigation/Navigation';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
-import Clarifai from 'clarifai';
 import ParticlesBg from 'particles-bg';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
@@ -11,15 +10,11 @@ import Rank from './components/Rank/Rank';
 
 import './App.css';
 
-const app = new Clarifai.App({
-  apiKey: '629ce7fcabe9460fb103644a5591ff37'
- });
 
-class App extends Component {
-  constructor(){
-    super();
-    this.state = {
-      input: '',
+
+
+const initialState = {
+  input: '',
       imageUrl: '',
       box: {},
       route: 'signin',
@@ -32,8 +27,14 @@ class App extends Component {
         entries: 0,
         joined: ''
       }
-    }
-  }
+}
+
+
+
+class App extends Component {
+  constructor(){
+    super();
+    this.state = initialState;  }
 
   loadUser = (data) => {
     this.setState({user: {
@@ -69,13 +70,14 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input})
-    app.models
-    .predict(
-    {
-      id: "a403429f2ddf4b49b307e318f00e528b",
-      version: "34ce21a40cc24b6b96ffee54aabff139"
-    },
-      this.state.input)
+          fetch('http://localhost:3000/imageurl', {
+            method: 'post',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+            input: this.state.input
+            })
+          }) 
+          .then(response => response.json())
       .then(response => {
         if (response) {
           fetch('http://localhost:3000/image', {
@@ -83,7 +85,7 @@ class App extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
             id: this.state.user.id,
-      })
+            })
           })
           .then(response => response.json())
           .then(count => {
@@ -97,7 +99,7 @@ class App extends Component {
 
   onRouteChange = (route) => {
     if (route === 'signout') {
-      this.setState({isSignedIn: false})
+      this.setState(initialState)
     } else if(route === 'home') {
       this.setState({isSignedIn: true})
     }
